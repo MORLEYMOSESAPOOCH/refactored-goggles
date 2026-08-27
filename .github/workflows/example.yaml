@@ -1,0 +1,24 @@
+---
+name: example
+
+on:
+  # Allows you to trigger this workflow via the GitHub API
+  workflow_dispatch:
+    inputs:
+      serviceID:
+        type: string
+        description: 'Render Service ID to deploy (e.g. srv-xxx)'
+
+jobs:
+  deploy-service:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Render CLI
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/render-oss/cli/refs/heads/main/bin/install.sh | sh
+      - name: Create Deploy
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          CI: true
+        run: |
+          render deploys create ${{ inputs.serviceID }} --output json --confirm

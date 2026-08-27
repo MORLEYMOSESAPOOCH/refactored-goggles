@@ -1,0 +1,21 @@
+services:
+- type: web
+  name: webhook-github-action
+  runtime: node
+  plan: starter
+  envVars:
+  - key: GITHUB_OWNER_NAME
+    sync: false
+  - key: GITHUB_REPO_NAME
+    sync: false
+  - key: GITHUB_WORKFLOW_ID
+    sync: false
+  - key: RENDER_WEBHOOK_SECRET
+    sync: false
+  - key: RENDER_API_KEY
+    sync: false
+  - key: GITHUB_API_TOKEN
+    sync: false
+  region: oregon
+  buildCommand: pnpm install && pnpm run build
+  startCommand: pnpm run start
